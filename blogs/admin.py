@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Blog, Category
+from .models import About_us, Blog, Category
+from .models import Follow
+
+
 # Register your models here.
 #slug automatically generate from title
 class BlogAdmin(admin.ModelAdmin):
@@ -10,3 +13,5 @@ class BlogAdmin(admin.ModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(Blog, BlogAdmin)
+admin.site.register(About_us)
+admin.site.register(Follow)

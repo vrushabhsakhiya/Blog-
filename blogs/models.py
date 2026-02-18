@@ -31,3 +31,32 @@ class Blog(models.Model):
     
     def __str__(self):
         return self.title
+    
+class About_us(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(max_length=2000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = 'About Us'
+    
+    def __str__(self):
+        return self.title
+    
+class Follow(models.Model):
+    ICON_CHOICES = (
+        ('facebook', 'Facebook'),
+        ('instagram', 'Instagram'),
+        ('x', 'x'),
+        ('github', 'GitHub'),
+        ('linkedin', 'LinkedIn'),
+        ('email', 'Email'),
+        ('website', 'Website'),
+    )
+
+    name = models.CharField(max_length=50, choices=ICON_CHOICES)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.name

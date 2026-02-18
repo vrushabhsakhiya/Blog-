@@ -52,10 +52,11 @@
   {% endif %}
 {% endfor %}
 <!--  Featured Posts  -->
-  <h3 class="text-uppercase text-warning " style="letter-spaceing: 2px; ">Featured Posts</h3>
+  <h3 class="text-uppercase text-warning " style="letter-spaceing: 2px; ">Catgory -{{ category.category_name }}</h3>
   <div class="row mb-2 " >
-    {% for post in featured_posts %}
-    {% if not forloop.first %}
+    {% if posts %}
+    {% for post in posts %}
+
     <div class="col-md-6  ">
       <div class="card border-0" >
         <div class="card-body">
@@ -65,77 +66,17 @@
         </div>
       </div>
     </div>
-    {% endif %}
-  {% endfor %}
-  </div>
-<!--  Recent Article  -->
-<h2 class="text-uppercase text-warning">Recent Posts</h2>
 
-<div class="row">
-
-  <!-- LEFT SIDE - POSTS -->
-  <div class="col-md-8 blog-main">
-
-    {% for post in posts %}
-    <div class="card border-0 mb-4">
-      <div class="card-body">
-        <h3>{{ post.title }}</h3>
-        <small class="mb-1 text-muted">
-          {{ post.created_at|timesince }} ago | {{ post.author }}
-        </small>
-        <p class="card-text">{{ post.short_description | truncatewords:25 }}</p>
-      </div>
-    </div>
     {% endfor %}
-
-  </div>
-  <!-- /.blog-main -->
-
-
-  <!-- RIGHT SIDEBAR -->
-  <aside class="col-md-4 blog-sidebar">
-
-    {% for about in about_us %}
-    <div class="p-3 mb-4 bg-light rounded shadow-sm">
-      <h4 class="font-italic">{{ about.title }}</h4>
-      <p class="mb-0">{{ about.description }}</p>
-    </div>
-    {% endfor %}
-
-    <div class="p-3 bg-light rounded shadow-sm">
-  <h4 class="font-italic">Follow Us</h4>
-
-  <div class="social-icons mt-3">
-    {% for follow in follows %}
-      <a href="{{ follow.url }}" target="_blank" class="mr-3">
-
-        {% if follow.name == 'facebook' %}
-          <i class="fab fa-facebook fa-lg"></i>
-        {% elif follow.name == 'instagram' %}
-          <i class="fab fa-instagram fa-lg"></i>
-        {% elif follow.name == 'x' %}
-          <i class="fab fa-x-twitter fa-lg"></i>
-        {% elif follow.name == 'github' %}
-          <i class="fab fa-github fa-lg"></i>
-        {% elif follow.name == 'linkedin' %}
-          <i class="fab fa-linkedin fa-lg"></i>
-        {% elif follow.name == 'email' %}
-          <i class="fas fa-envelope fa-lg"></i>
-        {% elif follow.name == 'website' %}
-          <i class="fas fa-globe fa-lg"></i>
-        {% endif %}
-
-      </a>
-    {% endfor %}
-  </div>
+    {% else %}
+    <p> No posts found!!</p>
+    {% endif %}  
 </div>
 
 
-  </aside>
-
 </div>
 
-</main>
+
 
 <!-- FOOTER -->
 <footer class="blog-footer text-center mt-5">
