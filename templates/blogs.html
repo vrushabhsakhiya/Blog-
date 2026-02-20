@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+
+        <!-- ================= LEFT : BLOG CONTENT ================= -->
+        <div class="col-lg-8">
+            <article>
+
+                <!-- Title -->
+                <header class="mb-4">
+                    <h1 class="fw-bolder mb-1">{{ single_blog.title }}</h1>
+
+                    <div class="text-muted fst-italic mb-2">
+                        Posted on {{ single_blog.created_at }} by {{ single_blog.author }}
+                    </div>
+
+                    <a class="badge bg-primary text-decoration-none text-light">
+                        {{ single_blog.category }}
+                    </a>
+                </header>
+
+                <!-- Blog Image -->
+                <figure class="mb-4 blog-img">
+                    <img src="{{ single_blog.featured_image.url }}" alt="blog image">
+                </figure>
+
+                <!-- Blog Text -->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">{{ single_blog.short_description }}</p>
+                    <p class="fs-5 mb-4">{{ single_blog.blog_body }}</p>
+                </section>
+
+            </article>
+        </div>
+
+
+        <!-- ================= RIGHT : SIDEBAR ================= -->
+        <div class="col-lg-4">
+
+            <!-- Categories -->
+            <div class="card mb-4 p-3">
+                <h4 class="font-italic">Categories</h4>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                {% for cat in categories %}
+                                    {% if forloop.counter|divisibleby:2 == False %}
+                                        <li>
+                                            <a href="{% url 'posts_by_category' cat.id %}" class="text-dark">
+                                                {{ cat.category_name }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                {% for cat in categories %}
+                                    {% if forloop.counter|divisibleby:2 %}
+                                        <li>
+                                            <a href="{% url 'posts_by_category' cat.id %}" class="text-dark">
+                                                {{ cat.category_name }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Follow Us -->
+            <div class="p-3 bg-light rounded shadow-sm">
+                <h4 class="font-italic">Follow Us</h4>
+                <div class="social-icons mt-3">
+                    {% for follow in follows %}
+                    <a href="{{ follow.url }}" target="_blank" class="mr-3">
+
+                        {% if follow.name == 'facebook' %}
+                            <i class="fab fa-facebook fa-lg"></i>
+                        {% elif follow.name == 'instagram' %}
+                            <i class="fab fa-instagram fa-lg"></i>
+                        {% elif follow.name == 'x' %}
+                            <i class="fab fa-x-twitter fa-lg"></i>
+                        {% elif follow.name == 'github' %}
+                            <i class="fab fa-github fa-lg"></i>
+                        {% elif follow.name == 'linkedin' %}
+                            <i class="fab fa-linkedin fa-lg"></i>
+                        {% elif follow.name == 'email' %}
+                            <i class="fas fa-envelope fa-lg"></i>
+                        {% elif follow.name == 'website' %}
+                            <i class="fas fa-globe fa-lg"></i>
+                        {% endif %}
+
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <!-- 📚 RESOURCES -->
+            {% if single_blog.links.all or single_blog.pdfs.all %}
+            <div class="card mt-4">
+                <h5 class="card-header">📚 Resources</h5>
+
+                <div class="card-body">
+
+                    <!-- Links -->
+                    {% if single_blog.links.all %}
+                    <h6 class="fw-bold mb-2">Useful Links</h6>
+                    <ul class="list-unstyled mb-3">
+                        {% for link in single_blog.links.all %}
+                        <li class="mb-2">
+                            🌐 
+                            <a href="{{ link.resource_link }}" target="_blank" class="text-dark">
+                                {{ link.url_heading }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <!-- PDFs -->
+                    {% if single_blog.pdfs.all %}
+                    <h6 class="fw-bold mb-2">Downloads</h6>
+                    <ul class="list-unstyled mb-0">
+                        {% for pdf in single_blog.pdfs.all %}
+                        <li class="mb-2">
+                            📄 
+                            <a href="{{ pdf.pdf_file.url }}" target="_blank" class="text-dark">
+                                {{ pdf.pdf_title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endif %}
+
+
+            <!-- Related Posts -->
+            {% if related_blogs %}
+            <div class="card mt-4">
+                <h5 class="card-header">📰 Related Posts</h5>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        {% for post in related_blogs %}
+                        <li class="mb-3">
+                            <a href="{% url 'blogs' post.slug %}" class="text-dark fw-bold">
+                                {{ post.title }}
+                            </a>
+                            <br>
+                            <small class="text-muted">
+                                {{ post.short_description|truncatewords:8 }}
+                            </small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

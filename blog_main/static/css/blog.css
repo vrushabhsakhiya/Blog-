@@ -56,4 +56,18 @@ h1, h2, h3, h4, h5, h6 {
 .social-icons a:hover {
     color: #f39c12;
 }
+.blog-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;   /* same ratio for all */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.blog-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transform: scale(1.05);   /* subtle zoom */
+}
 
